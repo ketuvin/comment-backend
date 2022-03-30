@@ -8,7 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 
 use App\Comment;
 
-// Swagger Annotation for Auth-Service
+// Swagger Annotation for Comment-Service
 /**
  * @OA\Info(
  *      version="1.0.0",
