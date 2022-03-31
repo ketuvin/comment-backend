@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      @OA\Property(property="id", type="integer"),
  *      @OA\Property(property="name", type="string"),
  *      @OA\Property(property="body", type="string"),
+ *      @OA\Property(property="comment_level", type="integer"),
  *      @OA\Property(property="reply_id", type="integer")
  * )
  */
@@ -25,7 +26,7 @@ class Comment extends Model
     *
     * @return array
     */
-    protected $fillable = ['name', 'body', 'reply_id'];
+    protected $fillable = ['name', 'body', 'comment_level', 'reply_id'];
 
     public function replies()
     {

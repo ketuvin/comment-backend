@@ -41,6 +41,10 @@ use App\Comment;
  *                     type="string"
  *                 ),
  *                 @OA\Property(
+ *                     property="comment_level",
+ *                     type="integer"
+ *                 ),
+ *                 @OA\Property(
  *                     property="reply_id",
  *                     type="integer"
  *                 )
@@ -116,6 +120,7 @@ class CommentController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'body' => 'required',
+            'comment_level' => 'filled',
             'reply_id' => 'filled'
         ]);
 
@@ -136,24 +141,18 @@ class CommentController extends Controller
      */
 
     public function index(Request $request) {
-        $comments = Comment::all();
+        $comments = Comment::where('comment_level', 1)->get();
 
         $commentsData = [];
 
         foreach($comments as $key) {
             $replies = $this->replies($key->id);
 
-            $reply = 0;
-
-            if (sizeof($replies) > 0) {
-                $reply = 1;
-            }
-
             array_push($commentsData, [
                 "name" => $key->name,
-                "commentid" => $key->id,
-                "comment" => $key->body,
-                "reply" => $reply,
+                "id" => $key->id,
+                "body" => $key->body,
+                "comment_level" => $key->comment_level,
                 "replies" => $replies,
                 "date" => $key->created_at->toDateTimeString()
             ]);
@@ -177,13 +176,16 @@ class CommentController extends Controller
         $comments = Comment::where('reply_id', $commentId)->get();
 
         $replies = [];
+        foreach($comments as $comment) {
+            $secondLvlReplies = Comment::where('reply_id', $comment->id)->get();
 
-        foreach($comments as $key) {
             array_push($replies, [
-                "name" => $key->name,
-                "commentid" => $key->id,
-                "comment" => $key->body,
-                "date" => $key->created_at->toDateTimeString()
+                "name" => $comment->name,
+                "id" => $comment->id,
+                "body" => $comment->body,
+                "comment_level" => $comment->comment_level,
+                "replies" => $secondLvlReplies,
+                "date" => $comment->created_at->toDateTimeString()
             ]);
         }
 
