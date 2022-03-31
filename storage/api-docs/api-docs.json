@@ -54,6 +54,9 @@
                                     "body": {
                                         "type": "string"
                                     },
+                                    "comment_level": {
+                                        "type": "integer"
+                                    },
                                     "reply_id": {
                                         "type": "integer"
                                     }
@@ -98,6 +101,9 @@
                     },
                     "body": {
                         "type": "string"
+                    },
+                    "comment_level": {
+                        "type": "integer"
                     },
                     "reply_id": {
                         "type": "integer"

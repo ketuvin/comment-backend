@@ -39,6 +39,8 @@ paths:
                   type: string
                 body:
                   type: string
+                comment_level:
+                  type: integer
                 reply_id:
                   type: integer
               type: object
@@ -65,6 +67,8 @@ components:
           type: string
         body:
           type: string
+        comment_level:
+          type: integer
         reply_id:
           type: integer
       type: object
